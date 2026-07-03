@@ -203,7 +203,7 @@
         <!-- Video Player -->
         <div class="video-wrapper">
             <iframe id="livePlayer" 
-                    src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&rel=0" 
+                    src="https://www.youtube.com/embed/miPjvSMBnBE?autoplay=1&rel=0" 
                     allow="autoplay; encrypted-media; fullscreen"
                     allowfullscreen>
             </iframe>
@@ -213,37 +213,37 @@
         <div class="channel-tabs">
             <button class="tab-btn active" data-lang="hindi"><i class="fas fa-language"></i> हिंदी</button>
             <button class="tab-btn" data-lang="english"><i class="fas fa-language"></i> English</button>
+            <button class="tab-btn" data-lang="business"><i class="fas fa-chart-line"></i> बिजनेस</button>
         </div>
 
         <!-- ===== HINDI CHANNELS ===== -->
         <div class="tv-channels" id="hindiChannels">
-            <button class="active" data-video="VIDEO_ID_1"><i class="fas fa-newspaper"></i> Republic Bharat</button>
-            <button data-video="VIDEO_ID_2"><i class="fas fa-newspaper"></i> News18 India</button>
-            <button data-video="VIDEO_ID_3"><i class="fas fa-newspaper"></i> ABP News</button>
-            <button data-video="VIDEO_ID_4"><i class="fas fa-newspaper"></i> India TV</button>
-            <button data-video="VIDEO_ID_5"><i class="fas fa-newspaper"></i> TV9 Bharatvarsh</button>
-            <button data-video="VIDEO_ID_6"><i class="fas fa-newspaper"></i> Zee News</button>
-            <button data-video="VIDEO_ID_7"><i class="fas fa-newspaper"></i> Aaj Tak</button>
+            <button class="active" data-video="miPjvSMBnBE"><i class="fas fa-newspaper"></i> Aaj Tak</button>
+            <button data-video="nyd-xznCpJc"><i class="fas fa-newspaper"></i> ABP News</button>
+            <button data-video="U9SH7XWaXOI"><i class="fas fa-newspaper"></i> Zee News</button>
+            <button data-video="Io-G_aiF8HA"><i class="fas fa-newspaper"></i> News18 India</button>
+            <button data-video="7cZF91lhIKk"><i class="fas fa-newspaper"></i> India TV</button>
         </div>
 
         <!-- ===== ENGLISH CHANNELS ===== -->
         <div class="tv-channels" id="englishChannels" style="display:none;">
-            <button class="active" data-video="VIDEO_ID_8"><i class="fas fa-globe"></i> CNN International</button>
-            <button data-video="VIDEO_ID_9"><i class="fas fa-globe"></i> BBC News</button>
-            <button data-video="VIDEO_ID_10"><i class="fas fa-globe"></i> Sky News</button>
-            <button data-video="VIDEO_ID_11"><i class="fas fa-globe"></i> Al Jazeera</button>
-            <button data-video="VIDEO_ID_12"><i class="fas fa-globe"></i> France 24</button>
-            <button data-video="VIDEO_ID_13"><i class="fas fa-globe"></i> DW News</button>
-            <button data-video="VIDEO_ID_14"><i class="fas fa-globe"></i> WION</button>
+            <button class="active" data-video="Xd2PwRvajRs"><i class="fas fa-globe"></i> Republic TV</button>
+            <button data-video="LuKwFajn37U"><i class="fas fa-globe"></i> DW News</button>
+        </div>
+
+        <!-- ===== BUSINESS CHANNELS ===== -->
+        <div class="tv-channels" id="businessChannels" style="display:none;">
+            <button class="active" data-video="JHh2HgJnBZI"><i class="fas fa-chart-line"></i> Zee Business</button>
+            <button data-video="grnjv6gmKmA"><i class="fas fa-chart-line"></i> ET Now Swadesh</button>
         </div>
 
         <!-- Channel Info -->
         <div class="channel-info">
             <div class="channel-name">
-                <i class="fas fa-circle"></i> <span id="channelName">Republic Bharat</span>
+                <i class="fas fa-circle"></i> <span id="channelName">Aaj Tak Live</span>
             </div>
             <div class="viewers">
-                <i class="fas fa-users"></i> <span id="viewerCount">5.2K</span> देख रहे हैं
+                <i class="fas fa-users"></i> <span id="viewerCount">15.2K</span> देख रहे हैं
             </div>
         </div>
     </div>
@@ -288,25 +288,22 @@
 
     <script src="script.js"></script>
     <script>
-        // ===== LIVE TV CHANNEL DATA =====
-        // 👇 यहाँ अपनी YouTube Video IDs डालें
+        // ===== LIVE TV CHANNEL DATA (सभी वर्किंग IDs) =====
         const channelData = {
-            // HINDI CHANNELS
-            'VIDEO_ID_1': { name: 'Republic Bharat', viewers: '5.2K', lang: 'hindi' },
-            'VIDEO_ID_2': { name: 'News18 India', viewers: '3.8K', lang: 'hindi' },
-            'VIDEO_ID_3': { name: 'ABP News', viewers: '4.1K', lang: 'hindi' },
-            'VIDEO_ID_4': { name: 'India TV', viewers: '2.9K', lang: 'hindi' },
-            'VIDEO_ID_5': { name: 'TV9 Bharatvarsh', viewers: '3.2K', lang: 'hindi' },
-            'VIDEO_ID_6': { name: 'Zee News', viewers: '3.6K', lang: 'hindi' },
-            'VIDEO_ID_7': { name: 'Aaj Tak', viewers: '6.1K', lang: 'hindi' },
-            // ENGLISH CHANNELS
-            'VIDEO_ID_8': { name: 'CNN International', viewers: '4.5K', lang: 'english' },
-            'VIDEO_ID_9': { name: 'BBC News', viewers: '3.9K', lang: 'english' },
-            'VIDEO_ID_10': { name: 'Sky News', viewers: '2.8K', lang: 'english' },
-            'VIDEO_ID_11': { name: 'Al Jazeera', viewers: '3.1K', lang: 'english' },
-            'VIDEO_ID_12': { name: 'France 24', viewers: '2.2K', lang: 'english' },
-            'VIDEO_ID_13': { name: 'DW News', viewers: '1.9K', lang: 'english' },
-            'VIDEO_ID_14': { name: 'WION', viewers: '2.6K', lang: 'english' }
+            // हिंदी न्यूज़
+            'miPjvSMBnBE': { name: 'Aaj Tak Live', viewers: '15.2K', lang: 'hindi' },
+            'nyd-xznCpJc': { name: 'ABP News Live', viewers: '1.2K', lang: 'hindi' },
+            'U9SH7XWaXOI': { name: 'Zee News Live', viewers: '161', lang: 'hindi' },
+            'Io-G_aiF8HA': { name: 'News18 India Live', viewers: '17.6K', lang: 'hindi' },
+            '7cZF91lhIKk': { name: 'India TV Live', viewers: '199', lang: 'hindi' },
+            
+            // इंग्लिश न्यूज़
+            'Xd2PwRvajRs': { name: 'Republic TV Live', viewers: '895', lang: 'english' },
+            'LuKwFajn37U': { name: 'DW News Live', viewers: '2.1K', lang: 'english' },
+            
+            // बिजनेस
+            'JHh2HgJnBZI': { name: 'Zee Business Live', viewers: '238', lang: 'business' },
+            'grnjv6gmKmA': { name: 'ET Now Swadesh', viewers: '11', lang: 'business' }
         };
 
         // ===== DOM ELEMENTS =====
@@ -315,6 +312,7 @@
         const viewerCount = document.getElementById('viewerCount');
         const hindiChannels = document.getElementById('hindiChannels');
         const englishChannels = document.getElementById('englishChannels');
+        const businessChannels = document.getElementById('businessChannels');
         const tabBtns = document.querySelectorAll('.tab-btn');
 
         let currentLang = 'hindi';
@@ -328,17 +326,23 @@
                 const lang = this.dataset.lang;
                 currentLang = lang;
 
+                // सभी चैनल कंटेनर छिपाएं
+                hindiChannels.style.display = 'none';
+                englishChannels.style.display = 'none';
+                businessChannels.style.display = 'none';
+
                 if (lang === 'hindi') {
                     hindiChannels.style.display = 'grid';
-                    englishChannels.style.display = 'none';
-                    // पहला हिंदी चैनल ऑटो-सेलेक्ट
-                    const firstHindiBtn = hindiChannels.querySelector('button');
-                    if (firstHindiBtn) firstHindiBtn.click();
-                } else {
-                    hindiChannels.style.display = 'none';
+                    const firstBtn = hindiChannels.querySelector('button');
+                    if (firstBtn) firstBtn.click();
+                } else if (lang === 'english') {
                     englishChannels.style.display = 'grid';
-                    const firstEnglishBtn = englishChannels.querySelector('button');
-                    if (firstEnglishBtn) firstEnglishBtn.click();
+                    const firstBtn = englishChannels.querySelector('button');
+                    if (firstBtn) firstBtn.click();
+                } else if (lang === 'business') {
+                    businessChannels.style.display = 'grid';
+                    const firstBtn = businessChannels.querySelector('button');
+                    if (firstBtn) firstBtn.click();
                 }
             });
         });
@@ -348,7 +352,6 @@
             const buttons = container.querySelectorAll('button');
             buttons.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // Remove active from all buttons in this container
                     container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
 
@@ -366,6 +369,7 @@
 
         setupChannelButtons(hindiChannels);
         setupChannelButtons(englishChannels);
+        setupChannelButtons(businessChannels);
 
         // ===== DEFAULT: HINDI FIRST CHANNEL =====
         const defaultBtn = hindiChannels.querySelector('button');
