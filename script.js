@@ -1,8 +1,7 @@
 // ============================================================
-// 🔥 MK NEWS HUB — COMPLETE SCRIPT (All 10 Updates)
+// 🔥 MK NEWS HUB — IMAGE FIX (Original Images)
 // ============================================================
 
-// ===== RSS FEEDS (Google News - Hindi) =====
 const RSS2JSON_URL = "https://api.rss2json.com/v1/api.json";
 
 const rssFeeds = {
@@ -17,6 +16,32 @@ const rssFeeds = {
 
 let currentCategory = "होम";
 let allNewsItems = [];
+
+// ===== 🖼️ ORIGINAL IMAGE EXTRACTOR =====
+function extractImageFromDescription(item) {
+    // 1️⃣ सबसे पहले: RSS से thumbnail
+    if (item.thumbnail) return item.thumbnail;
+    if (item.enclosure?.link) return item.enclosure.link;
+    
+    // 2️⃣ दूसरा: Description से <img> tag ढूंढें
+    if (item.description) {
+        const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/i);
+        if (imgMatch) return imgMatch[1];
+        
+        // 3️⃣ Description में URL ढूंढें (जो इमेज हो सकता है)
+        const urlMatch = item.description.match(/https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp)/i);
+        if (urlMatch) return urlMatch[0];
+    }
+    
+    // 4️⃣ Title से keywords निकालकर Unsplash से इमेज
+    if (item.title) {
+        const keywords = item.title.replace(/[^a-zA-Z0-9 ]/g, '').split(' ').slice(0, 4).join(' ');
+        return `https://source.unsplash.com/600x400/?${encodeURIComponent(keywords)}`;
+    }
+    
+    // 5️⃣ अंतिम: कैटेगरी बेस्ड फॉलबैक
+    return getFallbackImage(currentCategory);
+}
 
 // ===== 📰 फॉलबैक इमेज =====
 function getFallbackImage(category) {
@@ -66,17 +91,18 @@ async function fetchNews(category = "होम") {
     }
 }
 
-// ===== 📰 न्यूज़ कार्ड्स (Social Share के साथ) =====
+// ===== 📰 न्यूज़ कार्ड्स (Original Images के साथ) =====
 function renderNews(items, category) {
     const grid = document.getElementById('news-grid');
     grid.innerHTML = '';
 
     items.forEach((item, index) => {
-        let imageUrl = item.thumbnail || item.enclosure?.link || getFallbackImage(category);
+        // 🖼️ IMAGE EXTRACT
+        let imageUrl = extractImageFromDescription(item);
         
+        // अगर इमेज नहीं मिली तो फॉलबैक
         if (!imageUrl || imageUrl.includes('placeholder')) {
-            const colors = ['#e63946', '#2a9d8f', '#e9c46a', '#f4a261', '#264653'];
-            imageUrl = `https://via.placeholder.com/600x400/${colors[index % colors.length].replace('#','')}/ffffff?text=📰+${category}`;
+            imageUrl = getFallbackImage(category);
         }
 
         const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleString('hi-IN', { hour12: true }) : 'अभी';
@@ -93,7 +119,7 @@ function renderNews(items, category) {
                 <h3>${item.title || 'शीर्षक नहीं'}</h3>
                 <p>${item.description ? item.description.replace(/<[^>]*>/g, '').substring(0, 130) + '...' : 'विवरण नहीं'}</p>
                 <a href="${item.link}" target="_blank" class="read-more">पढ़ें →</a>
-                <!-- ===== SOCIAL SHARE BUTTONS ===== -->
+                <!-- SOCIAL SHARE -->
                 <div style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap;">
                     <a href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}" target="_blank" 
                        style="background:#1DA1F2;color:white;padding:4px 12px;border-radius:20px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
@@ -123,7 +149,7 @@ function renderFeatured(items, category) {
 
     if (items.length === 0) return;
 
-    const mainImg = items[0].thumbnail || items[0].enclosure?.link || getFallbackImage(category);
+    const mainImg = extractImageFromDescription(items[0]) || getFallbackImage(category);
     
     grid.innerHTML = `
         <div class="featured-card">
@@ -139,7 +165,7 @@ function renderFeatured(items, category) {
         </div>
         <div style="display:flex;flex-direction:column;gap:16px;">
             ${items.slice(1, 4).map(item => {
-                const img = item.thumbnail || item.enclosure?.link || getFallbackImage(category);
+                const img = extractImageFromDescription(item) || getFallbackImage(category);
                 const shareUrl = encodeURIComponent(item.link);
                 return `
                     <div class="featured-card" style="display:flex;gap:12px;align-items:center;padding:12px 16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;">
@@ -200,7 +226,6 @@ function searchNews() {
                 document.getElementById('newsCount').textContent = `${data.items.length} खबरें`;
                 renderNews(data.items, "होम");
                 renderFeatured(data.items.slice(0, 4), "होम");
-                // Remove active class from all nav links
                 document.querySelectorAll('.main-nav a[data-category]').forEach(l => l.classList.remove('active'));
             } else {
                 grid.innerHTML = `<p style="text-align:center;padding:40px;">😕 "${query}" से कोई न्यूज़ नहीं मिली</p>`;
@@ -214,12 +239,15 @@ function searchNews() {
 // ===== ⏰ लाइव घड़ी =====
 function updateClock() {
     const now = new Date();
-    document.getElementById('live-time').textContent = now.toLocaleString('hi-IN', { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit', 
-        hour12: true 
-    });
+    const el = document.getElementById('live-time');
+    if (el) {
+        el.textContent = now.toLocaleString('hi-IN', { 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: true 
+        });
+    }
 }
 setInterval(updateClock, 1000);
 updateClock();
@@ -240,7 +268,7 @@ if (darkBtn) {
     });
 }
 
-// ===== 🧭 नेविगेशन (Active Category के साथ) =====
+// ===== 🧭 नेविगेशन =====
 document.querySelectorAll('.main-nav a[data-category]').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -249,33 +277,41 @@ document.querySelectorAll('.main-nav a[data-category]').forEach(link => {
         const cat = this.dataset.category;
         if (cat) {
             fetchNews(cat);
-            document.getElementById('searchInput').value = '';
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = '';
         }
     });
 });
 
 // ===== 📬 न्यूज़लेटर =====
-document.getElementById('newsletterForm')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = this.querySelector('input').value;
-    alert(`✅ धन्यवाद! ${email} पर हमारा न्यूज़लेटर भेजा जाएगा।`);
-    this.querySelector('input').value = '';
-});
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = this.querySelector('input');
+        alert(`✅ धन्यवाद! ${input.value} पर हमारा न्यूज़लेटर भेजा जाएगा।`);
+        input.value = '';
+    });
+}
 
 // ===== 📱 मोबाइल मेन्यू =====
-document.getElementById('menuToggle')?.addEventListener('click', () => {
-    const nav = document.getElementById('mainNav');
-    if (nav.style.display === 'none' || nav.style.display === '') {
-        nav.style.display = 'block';
-    } else {
-        nav.style.display = 'none';
-    }
-});
+const menuToggle = document.getElementById('menuToggle');
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        const nav = document.getElementById('mainNav');
+        if (nav) {
+            nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+}
 
 // ===== 🔄 Enter Key से सर्च =====
-document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') searchNews();
-});
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') searchNews();
+    });
+}
 
 // ===== 🚀 पेज लोड =====
 window.onload = function () {
@@ -283,7 +319,7 @@ window.onload = function () {
     updateBreaking();
 };
 
-// ===== स्पिन एनिमेशन =====
+// ===== 🎨 एनिमेशन स्टाइल =====
 const style = document.createElement('style');
 style.textContent = `
     @keyframes spin {
