@@ -1,5 +1,5 @@
 // ============================================================
-// 🔥 MK NEWS HUB — IMAGE FIX (Original Images)
+// 🔥 MK NEWS HUB — COMPLETE SCRIPT (Image Fix Final)
 // ============================================================
 
 const RSS2JSON_URL = "https://api.rss2json.com/v1/api.json";
@@ -15,46 +15,49 @@ const rssFeeds = {
 };
 
 let currentCategory = "होम";
-let allNewsItems = [];
 
-// ===== 🖼️ ORIGINAL IMAGE EXTRACTOR =====
-function extractImageFromDescription(item) {
-    // 1️⃣ सबसे पहले: RSS से thumbnail
-    if (item.thumbnail) return item.thumbnail;
-    if (item.enclosure?.link) return item.enclosure.link;
-    
-    // 2️⃣ दूसरा: Description से <img> tag ढूंढें
-    if (item.description) {
-        const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/i);
-        if (imgMatch) return imgMatch[1];
-        
-        // 3️⃣ Description में URL ढूंढें (जो इमेज हो सकता है)
-        const urlMatch = item.description.match(/https?:\/\/[^\s]+\.(jpg|jpeg|png|gif|webp)/i);
-        if (urlMatch) return urlMatch[0];
-    }
-    
-    // 4️⃣ Title से keywords निकालकर Unsplash से इमेज
-    if (item.title) {
-        const keywords = item.title.replace(/[^a-zA-Z0-9 ]/g, '').split(' ').slice(0, 4).join(' ');
-        return `https://source.unsplash.com/600x400/?${encodeURIComponent(keywords)}`;
-    }
-    
-    // 5️⃣ अंतिम: कैटेगरी बेस्ड फॉलबैक
-    return getFallbackImage(currentCategory);
-}
-
-// ===== 📰 फॉलबैक इमेज =====
-function getFallbackImage(category) {
+// ===== 🖼️ कैटेगरी बेस्ड कलरफुल इमेजेज़ (हमेशा काम करेंगी) =====
+function getCategoryImage(category, index = 0) {
     const images = {
-        "होम": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop",
-        "राजनीति": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=400&fit=crop",
-        "टेक्नोलॉजी": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-        "खेल": "https://images.unsplash.com/photo-1461896836934-bd4bc94b7b9c?w=600&h=400&fit=crop",
-        "मनोरंजन": "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?w=600&h=400&fit=crop",
-        "दुनिया": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop",
-        "बिजनेस": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&h=400&fit=crop"
+        "होम": [
+            "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=600&h=400&fit=crop&crop=center"
+        ],
+        "राजनीति": [
+            "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=600&h=400&fit=crop&crop=center"
+        ],
+        "टेक्नोलॉजी": [
+            "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop&crop=center"
+        ],
+        "खेल": [
+            "https://images.unsplash.com/photo-1461896836934-bd4bc94b7b9c?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=600&h=400&fit=crop&crop=center"
+        ],
+        "मनोरंजन": [
+            "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=600&h=400&fit=crop&crop=center"
+        ],
+        "दुनिया": [
+            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?w=600&h=400&fit=crop&crop=center"
+        ],
+        "बिजनेस": [
+            "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop&crop=center",
+            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop&crop=center"
+        ]
     };
-    return images[category] || images["होम"];
+    
+    const catImages = images[category] || images["होम"];
+    return catImages[index % catImages.length];
 }
 
 // ===== 🔥 न्यूज़ फेच करें =====
@@ -80,7 +83,6 @@ async function fetchNews(category = "होम") {
             return;
         }
 
-        allNewsItems = data.items;
         document.getElementById('category-title').textContent = category;
         document.getElementById('newsCount').textContent = `${data.items.length} खबरें`;
         renderNews(data.items, category);
@@ -91,19 +93,17 @@ async function fetchNews(category = "होम") {
     }
 }
 
-// ===== 📰 न्यूज़ कार्ड्स (Original Images के साथ) =====
+// ===== 📰 न्यूज़ कार्ड्स =====
 function renderNews(items, category) {
     const grid = document.getElementById('news-grid');
     grid.innerHTML = '';
 
     items.forEach((item, index) => {
-        // 🖼️ IMAGE EXTRACT
-        let imageUrl = extractImageFromDescription(item);
+        // 🖼️ हर न्यूज़ के लिए अलग इमेज
+        const imageUrl = getCategoryImage(category, index);
         
-        // अगर इमेज नहीं मिली तो फॉलबैक
-        if (!imageUrl || imageUrl.includes('placeholder')) {
-            imageUrl = getFallbackImage(category);
-        }
+        // अगर item में thumbnail है तो वो use करें
+        let finalImage = item.thumbnail || item.enclosure?.link || imageUrl;
 
         const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleString('hi-IN', { hour12: true }) : 'अभी';
         const shareUrl = encodeURIComponent(item.link);
@@ -112,14 +112,13 @@ function renderNews(items, category) {
         const card = document.createElement('div');
         card.className = 'news-card';
         card.innerHTML = `
-            <img src="${imageUrl}" alt="${item.title || 'न्यूज़'}" loading="lazy" 
-                 onerror="this.src='${getFallbackImage(category)}'" />
+            <img src="${finalImage}" alt="${item.title || 'न्यूज़'}" loading="lazy" 
+                 onerror="this.src='${imageUrl}'" />
             <div class="content">
                 <span class="category">${item.author || 'MK News'}</span>
                 <h3>${item.title || 'शीर्षक नहीं'}</h3>
                 <p>${item.description ? item.description.replace(/<[^>]*>/g, '').substring(0, 130) + '...' : 'विवरण नहीं'}</p>
                 <a href="${item.link}" target="_blank" class="read-more">पढ़ें →</a>
-                <!-- SOCIAL SHARE -->
                 <div style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap;">
                     <a href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}" target="_blank" 
                        style="background:#1DA1F2;color:white;padding:4px 12px;border-radius:20px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
@@ -149,13 +148,13 @@ function renderFeatured(items, category) {
 
     if (items.length === 0) return;
 
-    const mainImg = extractImageFromDescription(items[0]) || getFallbackImage(category);
+    const mainImg = items[0].thumbnail || items[0].enclosure?.link || getCategoryImage(category, 0);
     
     grid.innerHTML = `
         <div class="featured-card">
             <img src="${mainImg}" alt="${items[0].title}" 
                  style="width:100%;min-height:300px;object-fit:cover;" 
-                 onerror="this.src='${getFallbackImage(category)}'" />
+                 onerror="this.src='${getCategoryImage(category, 0)}'" />
             <div class="featured-content">
                 <span class="category-tag">🔥 ट्रेंडिंग</span>
                 <h3>${items[0].title || 'ब्रेकिंग न्यूज़'}</h3>
@@ -164,13 +163,13 @@ function renderFeatured(items, category) {
             </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:16px;">
-            ${items.slice(1, 4).map(item => {
-                const img = extractImageFromDescription(item) || getFallbackImage(category);
+            ${items.slice(1, 4).map((item, i) => {
+                const img = item.thumbnail || item.enclosure?.link || getCategoryImage(category, i + 1);
                 const shareUrl = encodeURIComponent(item.link);
                 return `
                     <div class="featured-card" style="display:flex;gap:12px;align-items:center;padding:12px 16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;">
                         <img src="${img}" alt="news" style="width:100px;height:70px;object-fit:cover;border-radius:8px;" 
-                             onerror="this.src='${getFallbackImage(category)}'" />
+                             onerror="this.src='${getCategoryImage(category, i + 1)}'" />
                         <div>
                             <span style="font-size:11px;color:var(--accent);font-weight:700;">${item.author || 'MK News'}</span>
                             <h4 style="font-size:14px;margin:2px 0 4px;">${item.title ? item.title.substring(0, 60) + '...' : ''}</h4>
