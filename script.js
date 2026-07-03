@@ -1,5 +1,5 @@
 // ============================================================
-// 🔥 MK NEWS HUB — COMPLETE SCRIPT (Branded + Images Fixed)
+// 🔥 MK NEWS HUB — COMPLETE SCRIPT (All 10 Updates)
 // ============================================================
 
 // ===== RSS FEEDS (Google News - Hindi) =====
@@ -16,30 +16,9 @@ const rssFeeds = {
 };
 
 let currentCategory = "होम";
+let allNewsItems = [];
 
-// ===== 🖼️ फ्री इमेज सर्च API (Unsplash) =====
-// बिना API Key के — खुद ही इमेज ढूंढेगा
-async function getImageForNews(title) {
-    try {
-        // शब्दों को साफ करें
-        const query = title
-            .replace(/[^a-zA-Z0-9 ]/g, '')
-            .split(' ')
-            .slice(0, 5)
-            .join(' ');
-
-        // Unsplash Open Source API (बिना Key)
-        const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&orientation=landscape&w=600&h=400&client_id=YOUR_UNSPLASH_KEY`;
-        
-        // ⚠️ Unsplash के लिए free key चाहिए — नीचे देखें
-        // अभी के लिए हम dummy + Google Image fallback use करेंगे
-        return null; // फिलहाल fallback इमेज use करेंगे
-    } catch {
-        return null;
-    }
-}
-
-// ===== 📰 फॉलबैक इमेज जनरेटर (कैटेगरी के हिसाब से) =====
+// ===== 📰 फॉलबैक इमेज =====
 function getFallbackImage(category) {
     const images = {
         "होम": "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&h=400&fit=crop",
@@ -76,6 +55,7 @@ async function fetchNews(category = "होम") {
             return;
         }
 
+        allNewsItems = data.items;
         document.getElementById('category-title').textContent = category;
         document.getElementById('newsCount').textContent = `${data.items.length} खबरें`;
         renderNews(data.items, category);
@@ -86,22 +66,22 @@ async function fetchNews(category = "होम") {
     }
 }
 
-// ===== 📰 न्यूज़ कार्ड्स =====
+// ===== 📰 न्यूज़ कार्ड्स (Social Share के साथ) =====
 function renderNews(items, category) {
     const grid = document.getElementById('news-grid');
     grid.innerHTML = '';
 
     items.forEach((item, index) => {
-        // इमेज — पहले RSS से, नहीं तो कैटेगरी बेस्ड
         let imageUrl = item.thumbnail || item.enclosure?.link || getFallbackImage(category);
         
-        // अगर इमेज नहीं है तो कलरफुल placeholder
         if (!imageUrl || imageUrl.includes('placeholder')) {
             const colors = ['#e63946', '#2a9d8f', '#e9c46a', '#f4a261', '#264653'];
             imageUrl = `https://via.placeholder.com/600x400/${colors[index % colors.length].replace('#','')}/ffffff?text=📰+${category}`;
         }
 
         const pubDate = item.pubDate ? new Date(item.pubDate).toLocaleString('hi-IN', { hour12: true }) : 'अभी';
+        const shareUrl = encodeURIComponent(item.link);
+        const shareText = encodeURIComponent(item.title || 'MK News Hub');
 
         const card = document.createElement('div');
         card.className = 'news-card';
@@ -113,6 +93,21 @@ function renderNews(items, category) {
                 <h3>${item.title || 'शीर्षक नहीं'}</h3>
                 <p>${item.description ? item.description.replace(/<[^>]*>/g, '').substring(0, 130) + '...' : 'विवरण नहीं'}</p>
                 <a href="${item.link}" target="_blank" class="read-more">पढ़ें →</a>
+                <!-- ===== SOCIAL SHARE BUTTONS ===== -->
+                <div style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap;">
+                    <a href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}" target="_blank" 
+                       style="background:#1DA1F2;color:white;padding:4px 12px;border-radius:20px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="fab fa-twitter"></i> Tweet
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" 
+                       style="background:#1877F2;color:white;padding:4px 12px;border-radius:20px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="fab fa-facebook"></i> Share
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}" target="_blank" 
+                       style="background:#25D366;color:white;padding:4px 12px;border-radius:20px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                        <i class="fab fa-whatsapp"></i> Send
+                    </a>
+                </div>
                 <span class="time">⏱ ${pubDate}</span>
             </div>
         `;
@@ -145,6 +140,7 @@ function renderFeatured(items, category) {
         <div style="display:flex;flex-direction:column;gap:16px;">
             ${items.slice(1, 4).map(item => {
                 const img = item.thumbnail || item.enclosure?.link || getFallbackImage(category);
+                const shareUrl = encodeURIComponent(item.link);
                 return `
                     <div class="featured-card" style="display:flex;gap:12px;align-items:center;padding:12px 16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;">
                         <img src="${img}" alt="news" style="width:100px;height:70px;object-fit:cover;border-radius:8px;" 
@@ -152,7 +148,11 @@ function renderFeatured(items, category) {
                         <div>
                             <span style="font-size:11px;color:var(--accent);font-weight:700;">${item.author || 'MK News'}</span>
                             <h4 style="font-size:14px;margin:2px 0 4px;">${item.title ? item.title.substring(0, 60) + '...' : ''}</h4>
-                            <a href="${item.link}" target="_blank" style="font-size:12px;color:var(--accent);text-decoration:none;">पढ़ें →</a>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                <a href="${item.link}" target="_blank" style="font-size:12px;color:var(--accent);text-decoration:none;">पढ़ें →</a>
+                                <a href="https://twitter.com/intent/tweet?url=${shareUrl}" target="_blank" style="font-size:12px;color:#1DA1F2;text-decoration:none;"><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" style="font-size:12px;color:#1877F2;text-decoration:none;"><i class="fab fa-facebook"></i></a>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -177,6 +177,38 @@ async function updateBreaking() {
             }, 6000);
         }
     } catch (e) { console.log('Breaking error'); }
+}
+
+// ===== 🔍 सर्च न्यूज़ =====
+function searchNews() {
+    const query = document.getElementById('searchInput').value.trim();
+    if (!query) {
+        alert('कृपया कुछ खोजें!');
+        return;
+    }
+    const searchUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=hi-IN&gl=IN&ceid=IN:hi`;
+    const url = `${RSS2JSON_URL}?rss_url=${encodeURIComponent(searchUrl)}`;
+    
+    const grid = document.getElementById('news-grid');
+    grid.innerHTML = '<p style="text-align:center;padding:40px;">⏳ खोज हो रही है...</p>';
+    
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "ok" && data.items?.length > 0) {
+                document.getElementById('category-title').textContent = `"${query}" के परिणाम`;
+                document.getElementById('newsCount').textContent = `${data.items.length} खबरें`;
+                renderNews(data.items, "होम");
+                renderFeatured(data.items.slice(0, 4), "होम");
+                // Remove active class from all nav links
+                document.querySelectorAll('.main-nav a[data-category]').forEach(l => l.classList.remove('active'));
+            } else {
+                grid.innerHTML = `<p style="text-align:center;padding:40px;">😕 "${query}" से कोई न्यूज़ नहीं मिली</p>`;
+            }
+        })
+        .catch(() => {
+            grid.innerHTML = '<p style="text-align:center;color:red;">❌ एरर आ गई</p>';
+        });
 }
 
 // ===== ⏰ लाइव घड़ी =====
@@ -208,14 +240,17 @@ if (darkBtn) {
     });
 }
 
-// ===== 🧭 नेविगेशन =====
-document.querySelectorAll('.main-nav a').forEach(link => {
+// ===== 🧭 नेविगेशन (Active Category के साथ) =====
+document.querySelectorAll('.main-nav a[data-category]').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
-        document.querySelectorAll('.main-nav a').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.main-nav a[data-category]').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
         const cat = this.dataset.category;
-        if (cat) fetchNews(cat);
+        if (cat) {
+            fetchNews(cat);
+            document.getElementById('searchInput').value = '';
+        }
     });
 });
 
@@ -237,17 +272,30 @@ document.getElementById('menuToggle')?.addEventListener('click', () => {
     }
 });
 
+// ===== 🔄 Enter Key से सर्च =====
+document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') searchNews();
+});
+
 // ===== 🚀 पेज लोड =====
 window.onload = function () {
     fetchNews("होम");
     updateBreaking();
 };
 
-// स्पिन एनिमेशन
+// ===== स्पिन एनिमेशन =====
 const style = document.createElement('style');
 style.textContent = `
     @keyframes spin {
         to { transform: rotate(360deg); }
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
     }
 `;
 document.head.appendChild(style);
