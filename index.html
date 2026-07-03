@@ -3,37 +3,131 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MK News Hub</title>
+    <title>MK News Hub — लाइव न्यूज़</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+    <!-- 🔝 टॉप बार -->
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-clock"></i> <span id="live-time"></span></span>
+            <span><i class="fas fa-bolt" style="color:#ffd700;"></i> लाइव अपडेट</span>
+        </div>
+    </div>
+
+    <!-- 📰 हेडर -->
     <header>
         <div class="container">
-            <h1>📰 MK News Hub</h1>
-            <nav>
-                <a href="#">होम</a>
-                <a href="#">राजनीति</a>
-                <a href="#">टेक्नोलॉजी</a>
-                <a href="#">खेल</a>
-                <a href="#">मनोरंजन</a>
-            </nav>
+            <div class="logo">
+                <h1>📰 MK <span>News</span> Hub</h1>
+                <small>सबसे तेज़, सबसे सटीक</small>
+            </div>
+            <div class="header-right">
+                <button id="darkModeToggle" class="dark-btn"><i class="fas fa-moon"></i></button>
+                <button id="menuToggle" class="menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <section class="breaking">
-            <span>🔴 BREAKING:</span>
-            <p id="breaking-text">लाइव अपडेट यहाँ दिखेंगे...</p>
-        </section>
+    <!-- 🧭 नेविगेशन -->
+    <nav class="main-nav" id="mainNav">
+        <div class="container">
+            <a href="#" data-category="होम" class="active"><i class="fas fa-home"></i> होम</a>
+            <a href="#" data-category="राजनीति"><i class="fas fa-landmark"></i> राजनीति</a>
+            <a href="#" data-category="टेक्नोलॉजी"><i class="fas fa-microchip"></i> टेक</a>
+            <a href="#" data-category="खेल"><i class="fas fa-football"></i> खेल</a>
+            <a href="#" data-category="मनोरंजन"><i class="fas fa-film"></i> मनोरंजन</a>
+            <a href="#" data-category="दुनिया"><i class="fas fa-globe-asia"></i> दुनिया</a>
+            <a href="#" data-category="बिजनेस"><i class="fas fa-chart-line"></i> बिजनेस</a>
+        </div>
+    </nav>
 
-        <section class="news-grid" id="news-grid">
-            <!-- न्यूज़ कार्ड्स JavaScript से लोड होंगे -->
-        </section>
+    <!-- 🔴 ब्रेकिंग न्यूज़ -->
+    <section class="breaking-wrapper">
+        <div class="container">
+            <div class="breaking">
+                <span class="breaking-label"><i class="fas fa-circle" style="color:#ff0000; animation: blink 1s infinite;"></i> BREAKING</span>
+                <div class="breaking-text-wrapper">
+                    <p id="breaking-text">लाइव अपडेट यहाँ दिखेंगे...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🔥 फीचर्ड सेक्शन -->
+    <section class="featured" id="featuredSection">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-fire" style="color:#ff6b35;"></i> ट्रेंडिंग</h2>
+            <div class="featured-grid" id="featuredGrid">
+                <!-- Featured news will load here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 📰 मुख्य न्यूज़ ग्रिड -->
+    <main class="container">
+        <div class="news-header">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> <span id="category-title">ताज़ा ख़बरें</span></h2>
+            <span class="news-count" id="newsCount">12 खबरें</span>
+        </div>
+        <div class="news-grid" id="news-grid">
+            <!-- News cards load here -->
+        </div>
     </main>
 
+    <!-- 📬 न्यूज़लेटर -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-box">
+                <h3>📬 न्यूज़लेटर सब्सक्राइब करें</h3>
+                <p>हर सुबह टॉप 10 खबरें अपने इनबॉक्स में पाएं</p>
+                <form id="newsletterForm">
+                    <input type="email" placeholder="आपका ईमेल" required />
+                    <button type="submit">सब्सक्राइब</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🔗 फूटर -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 MK News Hub | All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>📰 MK News Hub</h3>
+                    <p>भारत की सबसे तेज़ न्यूज़ वेबसाइट। सटीक, तटस्थ और भरोसेमंद।</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>क्विक लिंक्स</h4>
+                    <a href="#">होम</a>
+                    <a href="#">राजनीति</a>
+                    <a href="#">टेक्नोलॉजी</a>
+                    <a href="#">खेल</a>
+                </div>
+                <div class="footer-col">
+                    <h4>कंपनी</h4>
+                    <a href="#">हमारे बारे में</a>
+                    <a href="#">संपर्क करें</a>
+                    <a href="#">गोपनीयता नीति</a>
+                    <a href="#">टर्म्स ऑफ सर्विस</a>
+                </div>
+                <div class="footer-col">
+                    <h4>संपर्क</h4>
+                    <p><i class="fas fa-envelope"></i> info@mknewshub.com</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-map-marker-alt"></i> नई दिल्ली, भारत</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MK News Hub | All rights reserved. | Made with ❤️ in India</p>
+            </div>
         </div>
     </footer>
 
