@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Contact Us — MK News Hub</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px 0;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            background: var(--card-bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #e63946;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+        }
+        .contact-form button {
+            background: #e63946;
+            color: white;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .contact-form button:hover {
+            background: #c62828;
+            transform: scale(1.02);
+        }
+        .contact-info-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .contact-info-card i {
+            color: #e63946;
+            font-size: 24px;
+            margin-right: 14px;
+            width: 30px;
+        }
+        .map-placeholder {
+            background: #1a2a4a;
+            color: white;
+            padding: 60px 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .contact-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar & Header (same as index.html) -->
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-clock"></i> <span id="live-time"></span></span>
+            <span><i class="fas fa-bolt" style="color:#ffd700;"></i> MK Global Nexus — Official News Portal</span>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" style="display:flex;align-items:center;gap:12px;">
+                <img src="images/logo.png" alt="Logo" style="height:50px;width:auto;" onerror="this.style.display='none'" />
+                <div>
+                    <a href="index.html" style="text-decoration:none;color:white;">
+                        <h1 style="margin:0;">📰 MK <span>News</span> Hub</h1>
+                        <small>सबसे तेज़, सबसे सटीक</small>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="about.html" style="color:white;text-decoration:none;font-weight:600;margin-right:12px;">About</a>
+                <button id="darkModeToggle" class="dark-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="index.html"><i class="fas fa-home"></i> होम</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> हमारे बारे में</a>
+            <a href="contact.html" class="active"><i class="fas fa-envelope"></i> संपर्क</a>
+        </div>
+    </nav>
+
+    <!-- ===== CONTENT ===== -->
+    <section style="padding:20px 0;">
+        <div class="container">
+            <h1 style="font-size:36px;font-weight:800;margin-bottom:8px;">📬 संपर्क करें</h1>
+            <p style="color:var(--text-light);margin-bottom:30px;">आपकी हर बात हमारे लिए महत्वपूर्ण है</p>
+
+            <div class="contact-container">
+                <div>
+                    <form class="contact-form" id="contactForm">
+                        <input type="text" placeholder="आपका पूरा नाम" required />
+                        <input type="email" placeholder="ईमेल पता" required />
+                        <input type="text" placeholder="विषय" required />
+                        <textarea rows="5" placeholder="आपका संदेश..." required></textarea>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> संदेश भेजें</button>
+                    </form>
+                </div>
+                <div>
+                    <div class="contact-info-card">
+                        <p><i class="fas fa-map-marker-alt"></i> नई दिल्ली, भारत</p>
+                        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope"></i> info@mknewshub.com</p>
+                        <p><i class="fas fa-globe"></i> www.mknewshub.com</p>
+                    </div>
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt" style="font-size:48px;color:#ffd700;"></i>
+                        <p style="margin-top:12px;">📍 Google Maps — जल्द ही</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>📰 MK News Hub</h3>
+                    <p>MK Global Nexus की आधिकारिक न्यूज़ वेबसाइट।</p>
+                </div>
+                <div class="footer-col">
+                    <h4>क्विक लिंक्स</h4>
+                    <a href="index.html">होम</a>
+                    <a href="about.html">हमारे बारे में</a>
+                    <a href="contact.html">संपर्क</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MK Global Nexus | All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ धन्यवाद! आपका संदेश भेज दिया गया है। हम जल्द ही संपर्क करेंगे।');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
