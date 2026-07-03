@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>🎵 Music — MK News Hub</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .music-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .music-container h1 {
+            font-size: 32px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .music-container .sub-text {
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+        .music-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .music-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: 0.3s;
+        }
+        .music-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .music-card .platform-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .music-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .music-card iframe {
+            width: 100%;
+            height: 352px;
+            border: none;
+            border-radius: 12px;
+        }
+        .music-card .playlist-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .music-card .playlist-link:hover {
+            color: var(--accent-dark);
+        }
+        @media (max-width: 768px) {
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+            .music-card iframe {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-clock"></i> <span id="live-time"></span></span>
+            <span><i class="fas fa-bolt" style="color:#ffd700;"></i> MK Global Nexus — Official News Portal</span>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container">
+            <div class="logo" style="display:flex;align-items:center;gap:12px;">
+                <img src="images/logo.png" alt="MK Global Nexus Logo" style="height:50px;width:auto;" onerror="this.style.display='none'" />
+                <div>
+                    <a href="index.html" style="text-decoration:none;color:white;">
+                        <h1 style="margin:0;">📰 MK <span>News</span> Hub</h1>
+                        <small>सबसे तेज़, सबसे सटीक</small>
+                        <div style="font-size:10px;color:#ffd700;letter-spacing:2px;margin-top:2px;">
+                            ⚡ A DIVINE MEDIA COMPANY
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="about.html" style="color:white;text-decoration:none;font-weight:600;margin-right:12px;border-bottom:2px solid #ffd700;padding-bottom:4px;font-size:14px;">
+                    <i class="fas fa-info-circle"></i> About
+                </a>
+                <button id="darkModeToggle" class="dark-btn"><i class="fas fa-moon"></i></button>
+                <button id="menuToggle" class="menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="main-nav" id="mainNav">
+        <div class="container">
+            <a href="index.html"><i class="fas fa-home"></i> होम</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> हमारे बारे में</a>
+            <a href="livetv.html"><i class="fas fa-tv"></i> लाइव टीवी</a>
+            <a href="music.html" class="active"><i class="fas fa-music"></i> म्यूज़िक</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> संपर्क</a>
+        </div>
+    </nav>
+
+    <!-- ===== MUSIC PAGE ===== -->
+    <div class="music-container">
+        <h1>
+            <i class="fas fa-music" style="color:var(--accent);"></i> म्यूज़िक
+            <span style="font-size:14px;background:#ffd700;color:#000;padding:2px 16px;border-radius:30px;font-weight:700;">🎧 FREE</span>
+        </h1>
+        <p class="sub-text">अपनी पसंदीदा प्लेलिस्ट चुनें और मुफ्त में संगीत का आनंद लें</p>
+
+        <div class="music-grid">
+
+            <!-- ===== YOUTUBE MUSIC ===== -->
+            <div class="music-card">
+                <h3><span class="platform-icon" style="color:#ff0000;">▶️</span> YouTube Music</h3>
+                <iframe src="https://www.youtube.com/embed/videoseries?list=PL4fGSI1pDJn7MBCeh1AxUHWb8ILr1xB5Y" 
+                        allow="autoplay; encrypted-media; fullscreen">
+                </iframe>
+                <a href="https://music.youtube.com/" target="_blank" class="playlist-link">
+                    <i class="fas fa-external-link-alt"></i> YouTube Music पर खोलें
+                </a>
+            </div>
+
+            <!-- ===== SPOTIFY ===== -->
+            <div class="music-card">
+                <h3><span class="platform-icon" style="color:#1DB954;">🎧</span> Spotify</h3>
+                <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" 
+                        allow="autoplay; encrypted-media; fullscreen">
+                </iframe>
+                <a href="https://open.spotify.com/" target="_blank" class="playlist-link">
+                    <i class="fas fa-external-link-alt"></i> Spotify पर खोलें
+                </a>
+            </div>
+
+            <!-- ===== JioSaavn ===== -->
+            <div class="music-card">
+                <h3><span class="platform-icon" style="color:#FF5E00;">🎶</span> JioSaavn</h3>
+                <iframe src="https://www.jiosaavn.com/embed/playlist/11092976" 
+                        allow="autoplay; encrypted-media; fullscreen">
+                </iframe>
+                <a href="https://www.jiosaavn.com/" target="_blank" class="playlist-link">
+                    <i class="fas fa-external-link-alt"></i> JioSaavn पर खोलें
+                </a>
+            </div>
+
+            <!-- ===== GAANA ===== -->
+            <div class="music-card">
+                <h3><span class="platform-icon" style="color:#F97316;">📻</span> Gaana</h3>
+                <iframe src="https://gaana.com/embed/playlist/7o6fmu1pmy6u" 
+                        allow="autoplay; encrypted-media; fullscreen">
+                </iframe>
+                <a href="https://gaana.com/" target="_blank" class="playlist-link">
+                    <i class="fas fa-external-link-alt"></i> Gaana पर खोलें
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                        <img src="images/logo.png" alt="MK Global Nexus" style="height:40px;width:auto;" onerror="this.style.display='none'" />
+                        <h3 style="margin:0;color:white;">MK News Hub</h3>
+                    </div>
+                    <p>MK Global Nexus की आधिकारिक न्यूज़ वेबसाइट।<br />सत्य, सटीक और भरोसेमंद।</p>
+                </div>
+                <div class="footer-col">
+                    <h4>क्विक लिंक्स</h4>
+                    <a href="index.html">होम</a>
+                    <a href="about.html">हमारे बारे में</a>
+                    <a href="livetv.html">लाइव टीवी</a>
+                    <a href="music.html">म्यूज़िक</a>
+                    <a href="contact.html">संपर्क</a>
+                </div>
+                <div class="footer-col">
+                    <h4>कंपनी</h4>
+                    <a href="about.html">MK Global Nexus</a>
+                    <a href="about.html">Founder — Manoj</a>
+                </div>
+                <div class="footer-col">
+                    <h4>संपर्क</h4>
+                    <p><i class="fas fa-envelope"></i> info@mknewshub.com</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 <strong>MK Global Nexus</strong> | MK News Hub — All rights reserved.</p>
+                <p style="font-size:12px;opacity:0.5;margin-top:4px;">
+                    <strong>Disclaimer:</strong> Music embedded from YouTube, Spotify, JioSaavn & Gaana. We do not host any content.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== LIVE CLOCK =====
+        function updateClock() {
+            const now = new Date();
+            const el = document.getElementById('live-time');
+            if (el) {
+                el.textContent = now.toLocaleString('hi-IN', { 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit', 
+                    hour12: true 
+                });
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // ===== DARK MODE =====
+        const darkBtn = document.getElementById('darkModeToggle');
+        if (darkBtn) {
+            darkBtn.addEventListener('click', () => {
+                const html = document.documentElement;
+                const current = html.getAttribute('data-theme');
+                if (current === 'dark') {
+                    html.removeAttribute('data-theme');
+                    darkBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    darkBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
+        }
+
+        // ===== MOBILE MENU =====
+        const menuToggle = document.getElementById('menuToggle');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                const nav = document.getElementById('mainNav');
+                if (nav) {
+                    nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
