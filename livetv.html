@@ -51,7 +51,6 @@
             border: none;
         }
 
-        /* ===== CHANNEL TABS ===== */
         .channel-tabs {
             display: flex;
             gap: 12px;
@@ -227,13 +226,13 @@
 
         <!-- ===== ENGLISH CHANNELS ===== -->
         <div class="tv-channels" id="englishChannels" style="display:none;">
-            <button class="active" data-video="Xd2PwRvajRs"><i class="fas fa-globe"></i> Republic TV</button>
+            <button data-video="Xd2PwRvajRs"><i class="fas fa-globe"></i> Republic TV</button>
             <button data-video="LuKwFajn37U"><i class="fas fa-globe"></i> DW News</button>
         </div>
 
         <!-- ===== BUSINESS CHANNELS ===== -->
         <div class="tv-channels" id="businessChannels" style="display:none;">
-            <button class="active" data-video="JHh2HgJnBZI"><i class="fas fa-chart-line"></i> Zee Business</button>
+            <button data-video="JHh2HgJnBZI"><i class="fas fa-chart-line"></i> Zee Business</button>
             <button data-video="grnjv6gmKmA"><i class="fas fa-chart-line"></i> ET Now Swadesh</button>
         </div>
 
@@ -286,95 +285,104 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
-        // ===== LIVE TV CHANNEL DATA (सभी वर्किंग IDs) =====
+        // ===== LIVE TV CHANNEL DATA =====
         const channelData = {
             // हिंदी न्यूज़
-            'miPjvSMBnBE': { name: 'Aaj Tak Live', viewers: '15.2K', lang: 'hindi' },
-            'nyd-xznCpJc': { name: 'ABP News Live', viewers: '1.2K', lang: 'hindi' },
-            'U9SH7XWaXOI': { name: 'Zee News Live', viewers: '161', lang: 'hindi' },
-            'Io-G_aiF8HA': { name: 'News18 India Live', viewers: '17.6K', lang: 'hindi' },
-            '7cZF91lhIKk': { name: 'India TV Live', viewers: '199', lang: 'hindi' },
-            
+            'miPjvSMBnBE': { name: 'Aaj Tak Live', viewers: '15.2K' },
+            'nyd-xznCpJc': { name: 'ABP News Live', viewers: '1.2K' },
+            'U9SH7XWaXOI': { name: 'Zee News Live', viewers: '161' },
+            'Io-G_aiF8HA': { name: 'News18 India Live', viewers: '17.6K' },
+            '7cZF91lhIKk': { name: 'India TV Live', viewers: '199' },
             // इंग्लिश न्यूज़
-            'Xd2PwRvajRs': { name: 'Republic TV Live', viewers: '895', lang: 'english' },
-            'LuKwFajn37U': { name: 'DW News Live', viewers: '2.1K', lang: 'english' },
-            
+            'Xd2PwRvajRs': { name: 'Republic TV Live', viewers: '895' },
+            'LuKwFajn37U': { name: 'DW News Live', viewers: '2.1K' },
             // बिजनेस
-            'JHh2HgJnBZI': { name: 'Zee Business Live', viewers: '238', lang: 'business' },
-            'grnjv6gmKmA': { name: 'ET Now Swadesh', viewers: '11', lang: 'business' }
+            'JHh2HgJnBZI': { name: 'Zee Business Live', viewers: '238' },
+            'grnjv6gmKmA': { name: 'ET Now Swadesh', viewers: '11' }
         };
 
         // ===== DOM ELEMENTS =====
         const player = document.getElementById('livePlayer');
-        const channelName = document.getElementById('channelName');
-        const viewerCount = document.getElementById('viewerCount');
-        const hindiChannels = document.getElementById('hindiChannels');
-        const englishChannels = document.getElementById('englishChannels');
-        const businessChannels = document.getElementById('businessChannels');
+        const channelNameEl = document.getElementById('channelName');
+        const viewerCountEl = document.getElementById('viewerCount');
+
+        // ===== सभी चैनल कंटेनर =====
+        const containers = {
+            hindi: document.getElementById('hindiChannels'),
+            english: document.getElementById('englishChannels'),
+            business: document.getElementById('businessChannels')
+        };
+
+        // ===== टैब बटन्स =====
         const tabBtns = document.querySelectorAll('.tab-btn');
 
-        let currentLang = 'hindi';
+        // ===== चैनल बदलने का फंक्शन =====
+        function switchChannel(videoId) {
+            const data = channelData[videoId];
+            if (!data) return;
 
-        // ===== LANGUAGE TAB SWITCHER =====
+            // Player अपडेट करें
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            
+            // Info अपडेट करें
+            channelNameEl.textContent = data.name;
+            viewerCountEl.textContent = data.viewers;
+
+            // सभी कंटेनरों से active class हटाएं
+            document.querySelectorAll('.tv-channels button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // इस video वाले बटन को active करें
+            document.querySelectorAll(`.tv-channels button[data-video="${videoId}"]`).forEach(btn => {
+                btn.classList.add('active');
+            });
+        }
+
+        // ===== सभी बटन्स पर क्लिक इवेंट लगाएं =====
+        document.querySelectorAll('.tv-channels button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const videoId = this.dataset.video;
+                switchChannel(videoId);
+            });
+        });
+
+        // ===== टैब स्विचर =====
         tabBtns.forEach(btn => {
             btn.addEventListener('click', function() {
+                // सभी टैब्स से active हटाएं
                 tabBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
 
                 const lang = this.dataset.lang;
-                currentLang = lang;
 
-                // सभी चैनल कंटेनर छिपाएं
-                hindiChannels.style.display = 'none';
-                englishChannels.style.display = 'none';
-                businessChannels.style.display = 'none';
+                // सभी कंटेनर छिपाएं
+                containers.hindi.style.display = 'none';
+                containers.english.style.display = 'none';
+                containers.business.style.display = 'none';
 
+                // चुने हुए कंटेनर को दिखाएं
                 if (lang === 'hindi') {
-                    hindiChannels.style.display = 'grid';
-                    const firstBtn = hindiChannels.querySelector('button');
-                    if (firstBtn) firstBtn.click();
+                    containers.hindi.style.display = 'grid';
+                    const firstBtn = containers.hindi.querySelector('button');
+                    if (firstBtn) switchChannel(firstBtn.dataset.video);
                 } else if (lang === 'english') {
-                    englishChannels.style.display = 'grid';
-                    const firstBtn = englishChannels.querySelector('button');
-                    if (firstBtn) firstBtn.click();
+                    containers.english.style.display = 'grid';
+                    const firstBtn = containers.english.querySelector('button');
+                    if (firstBtn) switchChannel(firstBtn.dataset.video);
                 } else if (lang === 'business') {
-                    businessChannels.style.display = 'grid';
-                    const firstBtn = businessChannels.querySelector('button');
-                    if (firstBtn) firstBtn.click();
+                    containers.business.style.display = 'grid';
+                    const firstBtn = containers.business.querySelector('button');
+                    if (firstBtn) switchChannel(firstBtn.dataset.video);
                 }
             });
         });
 
-        // ===== CHANNEL SWITCHER =====
-        function setupChannelButtons(container) {
-            const buttons = container.querySelectorAll('button');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const videoId = this.dataset.video;
-                    const data = channelData[videoId];
-                    
-                    if (data) {
-                        player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-                        channelName.textContent = data.name;
-                        viewerCount.textContent = data.viewers;
-                    }
-                });
-            });
-        }
-
-        setupChannelButtons(hindiChannels);
-        setupChannelButtons(englishChannels);
-        setupChannelButtons(businessChannels);
-
-        // ===== DEFAULT: HINDI FIRST CHANNEL =====
-        const defaultBtn = hindiChannels.querySelector('button');
+        // ===== DEFAULT: हिंदी का पहला चैनल =====
+        const defaultBtn = containers.hindi.querySelector('button');
         if (defaultBtn) {
-            defaultBtn.click();
+            switchChannel(defaultBtn.dataset.video);
         }
 
         // ===== LIVE CLOCK =====
