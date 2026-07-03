@@ -105,17 +105,19 @@
         }
 
         .founder-card .founder-avatar {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #e63946, #ffd700);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            font-weight: 800;
-            color: white;
+            overflow: hidden;
             flex-shrink: 0;
+            border: 4px solid #ffd700;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .founder-card .founder-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .founder-card .founder-info h3 {
@@ -245,6 +247,11 @@
             .profile-tags {
                 justify-content: center;
             }
+            .founder-card .founder-avatar {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -261,17 +268,23 @@
     <!-- ===== HEADER ===== -->
     <header>
         <div class="container">
-            <div class="logo">
-                <a href="index.html" style="text-decoration:none;color:white;">
-                    <h1>📰 MK <span>News</span> Hub</h1>
-                    <small>सबसे तेज़, सबसे सटीक</small>
-                    <div style="font-size:10px;color:#ffd700;letter-spacing:2px;margin-top:2px;">
-                        ⚡ A DIVINE MEDIA COMPANY
-                    </div>
-                </a>
+            <div class="logo" style="display:flex;align-items:center;gap:12px;">
+                <img src="images/logo.png" 
+                     alt="MK Global Nexus Logo" 
+                     style="height:50px;width:auto;" 
+                     onerror="this.style.display='none'" />
+                <div>
+                    <a href="index.html" style="text-decoration:none;color:white;">
+                        <h1 style="margin:0;">📰 MK <span>News</span> Hub</h1>
+                        <small>सबसे तेज़, सबसे सटीक</small>
+                        <div style="font-size:10px;color:#ffd700;letter-spacing:2px;margin-top:2px;">
+                            ⚡ A DIVINE MEDIA COMPANY
+                        </div>
+                    </a>
+                </div>
             </div>
             <div class="header-right">
-                <a href="about.html" style="color:white;text-decoration:none;font-weight:600;margin-right:12px;border-bottom:2px solid #ffd700;padding-bottom:4px;">
+                <a href="about.html" style="color:white;text-decoration:none;font-weight:600;margin-right:12px;border-bottom:2px solid #ffd700;padding-bottom:4px;font-size:14px;">
                     <i class="fas fa-info-circle"></i> About
                 </a>
                 <button id="darkModeToggle" class="dark-btn"><i class="fas fa-moon"></i></button>
@@ -293,6 +306,7 @@
     <!-- ===== HERO ===== -->
     <section class="about-hero">
         <div class="container">
+            <img src="images/logo.png" alt="MK Global Nexus" style="height:80px;margin-bottom:16px;" onerror="this.style.display='none'" />
             <h1>हमारे बारे में <span>About Us</span></h1>
             <p>सत्य, निष्पक्ष और तथ्य-आधारित पत्रकारिता की ओर एक मजबूत कदम</p>
         </div>
@@ -339,7 +353,12 @@
 
                 <div class="founder-card">
                     <div class="founder-header">
-                        <div class="founder-avatar">M</div>
+                        <!-- 👇 FOUNDER PHOTO -->
+                        <div class="founder-avatar">
+                            <img src="images/founder.jpg" 
+                                 alt="Manoj - Founder & CEO, MK Global Nexus" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop'" />
+                        </div>
                         <div class="founder-info">
                             <h3>Manoj</h3>
                             <div class="designation">Founder & CEO, MK Global Nexus</div>
@@ -362,7 +381,7 @@
                         और जिम्मेदार पत्रकारिता</strong> के क्षेत्र में कार्यरत एक प्रतिष्ठित संगठन है।
                     </p>
                     <p style="font-size:15px;line-height:1.8;color:var(--text-light);">
-                        उनका मानना है कि — <em>“सत्य की ताकत ही समाज को बदल सकती है।”</em> 
+                        उनका मानना है कि — <em>"सत्य की ताकत ही समाज को बदल सकती है।"</em> 
                         इसी सोच के साथ उन्होंने <strong>MK News Hub</strong> की स्थापना की, 
                         ताकि आम जनता तक <strong>सटीक, प्रमाणित और निष्पक्ष सूचना</strong> पहुँच सके 
                         और वे <strong>डिजिटल दुनिया में सुरक्षित</strong> रह सकें।
@@ -465,7 +484,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>📰 MK News Hub</h3>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                        <img src="images/logo.png" alt="MK Global Nexus" style="height:40px;width:auto;" onerror="this.style.display='none'" />
+                        <h3 style="margin:0;color:white;">MK News Hub</h3>
+                    </div>
                     <p>MK Global Nexus की आधिकारिक न्यूज़ वेबसाइट।<br />सत्य, सटीक और भरोसेमंद।</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
@@ -496,7 +518,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 MK Global Nexus | MK News Hub — All rights reserved. | Made with ❤️ in India</p>
+                <p>&copy; 2026 <strong>MK Global Nexus</strong> | MK News Hub — All rights reserved. | Made with ❤️ in India</p>
                 <p style="font-size:12px;opacity:0.5;margin-top:4px;">
                     <strong>Disclaimer:</strong> This is a news and awareness platform. All content is for informational purposes only.
                 </p>
