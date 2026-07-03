@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MK News Hub — लाइव न्यूज़</title>
+    
+    <!-- ===== SEO OPTIMIZATION ===== -->
+    <title>MK News Hub — सबसे तेज़, सबसे सटीक न्यूज़</title>
+    <meta name="title" content="MK News Hub — सबसे तेज़, सबसे सटीक न्यूज़" />
+    <meta name="description" content="MK Global Nexus की आधिकारिक न्यूज़ वेबसाइट। साइबर अपराध, डिजिटल फ्रॉड, टेक्नोलॉजी, कानून, स्वास्थ्य और जनहित पर विश्वसनीय समाचार।" />
+    <meta name="keywords" content="MK News Hub, MK Global Nexus, न्यूज़, साइबर अपराध, डिजिटल फ्रॉड, टेक्नोलॉजी, कानून, स्वास्थ्य, जनहित, समाचार" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://mknewshub.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mknewshub.com/" />
+    <meta property="og:title" content="MK News Hub — सबसे तेज़, सबसे सटीक न्यूज़" />
+    <meta property="og:description" content="MK Global Nexus की आधिकारिक न्यूज़ वेबसाइट। साइबर अपराध, डिजिटल फ्रॉड, टेक्नोलॉजी, कानून, स्वास्थ्य और जनहित पर विश्वसनीय समाचार।" />
+    <meta property="og:image" content="https://mknewshub.com/images/logo.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://mknewshub.com/" />
+    <meta property="twitter:title" content="MK News Hub — सबसे तेज़, सबसे सटीक न्यूज़" />
+    <meta property="twitter:description" content="MK Global Nexus की आधिकारिक न्यूज़ वेबसाइट।" />
+    <meta property="twitter:image" content="https://mknewshub.com/images/logo.png" />
+
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
@@ -20,11 +42,7 @@
     <header>
         <div class="container">
             <div class="logo" style="display:flex;align-items:center;gap:12px;">
-                <!-- 👇 LOGO PNG -->
-                <img src="images/logo.png" 
-                     alt="MK Global Nexus Logo" 
-                     style="height:50px;width:auto;" 
-                     onerror="this.style.display='none'" />
+                <img src="images/logo.png" alt="MK Global Nexus Logo" style="height:50px;width:auto;" onerror="this.style.display='none'" />
                 <div>
                     <a href="index.html" style="text-decoration:none;color:white;">
                         <h1 style="margin:0;">📰 MK <span>News</span> Hub</h1>
@@ -59,17 +77,31 @@
         </div>
     </nav>
 
-    <!-- 🔴 ब्रेकिंग न्यूज़ -->
-    <section class="breaking-wrapper">
-        <div class="container">
-            <div class="breaking">
-                <span class="breaking-label"><i class="fas fa-circle" style="color:#ff0000; animation: blink 1s infinite;"></i> BREAKING</span>
-                <div class="breaking-text-wrapper">
-                    <p id="breaking-text">लाइव अपडेट यहाँ दिखेंगे...</p>
-                </div>
+    <!-- 🔍 सर्च बार -->
+    <div class="search-bar" style="padding:12px 0;background:var(--secondary);border-bottom:2px solid var(--accent);">
+        <div class="container" style="display:flex;gap:10px;flex-wrap:wrap;">
+            <input type="text" id="searchInput" placeholder="🔍 न्यूज़ खोजें..." 
+                   style="flex:1;padding:12px 20px;border:none;border-radius:50px;font-size:16px;outline:none;min-width:200px;background:var(--card-bg);color:var(--text);" />
+            <button onclick="searchNews()" 
+                    style="background:#e63946;color:white;padding:12px 30px;border:none;border-radius:50px;font-weight:700;cursor:pointer;transition:0.3s;">
+                <i class="fas fa-search"></i> खोजें
+            </button>
+        </div>
+    </div>
+
+    <!-- 🔴 ब्रेकिंग न्यूज़ टिकर -->
+    <div class="breaking-ticker" style="background:#0a1628;color:white;padding:8px 0;overflow:hidden;border-bottom:2px solid #e63946;">
+        <div class="container" style="display:flex;align-items:center;gap:20px;">
+            <span style="background:#e63946;padding:4px 16px;border-radius:30px;font-weight:700;font-size:13px;white-space:nowrap;">
+                <i class="fas fa-circle" style="color:#ff0000;animation:blink 1s infinite;"></i> LIVE
+            </span>
+            <div style="overflow:hidden;flex:1;">
+                <p id="breaking-text" style="margin:0;white-space:nowrap;animation:marquee 20s linear infinite;font-weight:500;">
+                    लाइव अपडेट यहाँ दिखेंगे...
+                </p>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- 🔥 फीचर्ड सेक्शन -->
     <section class="featured" id="featuredSection">
@@ -127,15 +159,20 @@
                     <h4>क्विक लिंक्स</h4>
                     <a href="index.html">होम</a>
                     <a href="about.html">हमारे बारे में</a>
-                    <a href="#">संपर्क</a>
-                    <a href="#">नीतियाँ</a>
+                    <a href="contact.html">संपर्क</a>
+                    <a href="privacy.html">प्राइवेसी पॉलिसी</a>
+                    <a href="disclaimer.html">डिस्क्लेमर</a>
+                    <a href="terms.html">टर्म्स & कंडीशंस</a>
+                    <a href="editorial.html">एडिटोरियल पॉलिसी</a>
                 </div>
                 <div class="footer-col">
                     <h4>कंपनी</h4>
                     <a href="about.html">MK Global Nexus</a>
                     <a href="about.html">Founder — Manoj</a>
-                    <a href="#">Editorial Policy</a>
-                    <a href="#">Privacy Policy</a>
+                    <a href="editorial.html">Editorial Policy</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                    <a href="disclaimer.html">Disclaimer</a>
                 </div>
                 <div class="footer-col">
                     <h4>संपर्क</h4>
