@@ -142,7 +142,6 @@
             margin-right: 6px;
         }
 
-        /* IPTV Guide Box */
         .iptv-guide {
             margin-top: 30px;
             padding: 20px 24px;
@@ -251,8 +250,7 @@
         <!-- ===== VIDEO PLAYER ===== -->
         <div class="video-wrapper">
             <iframe id="livePlayer" 
-                    src="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/countries/in.m3u&autoplay=true" 
-                    allow="autoplay; encrypted-media; fullscreen"
+                    src="https://iptvnator.vercel.app/?playlist=https://iptv-org.github.io/iptv/countries/in.m3u" 
                     allowfullscreen>
             </iframe>
         </div>
@@ -275,16 +273,16 @@
 
         <!-- ===== CHANNEL BUTTONS ===== -->
         <div class="tv-channels" id="channelButtons">
-            <button class="active" data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/countries/in.m3u&autoplay=true">
+            <button class="active" data-playlist="https://iptv-org.github.io/iptv/countries/in.m3u">
                 <i class="fas fa-tv"></i> भारत
             </button>
-            <button data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/languages/hin.m3u&autoplay=true">
+            <button data-playlist="https://iptv-org.github.io/iptv/languages/hin.m3u">
                 <i class="fas fa-language"></i> हिंदी
             </button>
-            <button data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/categories/news.m3u&autoplay=true">
+            <button data-playlist="https://iptv-org.github.io/iptv/categories/news.m3u">
                 <i class="fas fa-newspaper"></i> न्यूज़
             </button>
-            <button data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/index.m3u&autoplay=true">
+            <button data-playlist="https://iptv-org.github.io/iptv/index.m3u">
                 <i class="fas fa-globe"></i> सभी
             </button>
         </div>
@@ -295,7 +293,7 @@
                 <i class="fas fa-circle"></i> <span id="channelName">🇮🇳 भारत के चैनल्स</span>
             </div>
             <div class="viewers">
-                <i class="fas fa-users"></i> <span id="viewerCount">10,000+</span> चैनल्स
+                <i class="fas fa-users"></i> <span id="viewerCount">500+</span> चैनल्स
             </div>
         </div>
 
@@ -362,23 +360,50 @@
 
     <script src="script.js"></script>
     <script>
-        // ===== IPTV PLAYER — PERMANENT SOLUTION =====
+        // ============================================================
+        // 🔥 IPTV PLAYER — PERMANENT SOLUTION (FIXED)
+        // ============================================================
         const player = document.getElementById('livePlayer');
         const channelNameEl = document.getElementById('channelName');
         const viewerCountEl = document.getElementById('viewerCount');
-        const channelButtons = document.querySelectorAll('.tv-channels button');
         const tabButtons = document.querySelectorAll('.tab-btn');
+        const channelButtons = document.querySelectorAll('.tv-channels button');
 
         const channelData = {
-            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/countries/in.m3u&autoplay=true': 
-                { name: '🇮🇳 भारत के चैनल्स', viewers: '500+' },
-            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/languages/hin.m3u&autoplay=true': 
-                { name: '🗣️ हिंदी चैनल्स', viewers: '200+' },
-            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/categories/news.m3u&autoplay=true': 
-                { name: '📰 न्यूज़ चैनल्स', viewers: '100+' },
-            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/index.m3u&autoplay=true': 
-                { name: '🌍 सभी चैनल्स', viewers: '10,000+' }
+            'https://iptv-org.github.io/iptv/countries/in.m3u': { name: '🇮🇳 भारत के चैनल्स', viewers: '500+' },
+            'https://iptv-org.github.io/iptv/languages/hin.m3u': { name: '🗣️ हिंदी चैनल्स', viewers: '200+' },
+            'https://iptv-org.github.io/iptv/categories/news.m3u': { name: '📰 न्यूज़ चैनल्स', viewers: '100+' },
+            'https://iptv-org.github.io/iptv/index.m3u': { name: '🌍 सभी चैनल्स', viewers: '10,000+' }
         };
+
+        // ===== FUNCTION TO SWITCH PLAYLIST =====
+        function switchPlaylist(playlistUrl) {
+            const data = channelData[playlistUrl];
+            if (data) {
+                player.src = `https://iptvnator.vercel.app/?playlist=${playlistUrl}`;
+                channelNameEl.textContent = data.name;
+                viewerCountEl.textContent = data.viewers;
+            }
+        }
+
+        // ===== TAB BUTTONS =====
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const playlistUrl = this.dataset.playlist;
+                switchPlaylist(playlistUrl);
+
+                // Channel buttons में भी active class update करें
+                channelButtons.forEach(b => {
+                    b.classList.remove('active');
+                    if (b.dataset.playlist === playlistUrl) {
+                        b.classList.add('active');
+                    }
+                });
+            });
+        });
 
         // ===== CHANNEL BUTTONS =====
         channelButtons.forEach(btn => {
@@ -386,37 +411,14 @@
                 channelButtons.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
 
-                const channelUrl = this.dataset.channel;
-                const data = channelData[channelUrl];
-
-                if (data) {
-                    player.src = channelUrl;
-                    channelNameEl.textContent = data.name;
-                    viewerCountEl.textContent = data.viewers;
-                }
-            });
-        });
-
-        // ===== TAB BUTTONS (प्लेलिस्ट बदलें) =====
-        tabButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                tabButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-
                 const playlistUrl = this.dataset.playlist;
-                const embedUrl = `https://francomartino.github.io/hls-embed/?url=${playlistUrl}&autoplay=true`;
-                
-                // चैनल बटन्स में से मैचिंग बटन ढूंढें और उसे active करें
-                channelButtons.forEach(b => {
+                switchPlaylist(playlistUrl);
+
+                // Tab buttons में भी active class update करें
+                tabButtons.forEach(b => {
                     b.classList.remove('active');
-                    if (b.dataset.channel === embedUrl) {
+                    if (b.dataset.playlist === playlistUrl) {
                         b.classList.add('active');
-                        const data = channelData[embedUrl];
-                        if (data) {
-                            player.src = embedUrl;
-                            channelNameEl.textContent = data.name;
-                            viewerCountEl.textContent = data.viewers;
-                        }
                     }
                 });
             });
