@@ -1,8 +1,24 @@
 // ============================================================
-// 🔥 MK NEWS HUB — COMPLETE SCRIPT (All 5 New Features)
+// 🆕 LOADING ANIMATION — FIXED (सबसे ऊपर)
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        setTimeout(function() {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s ease';
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500);
+        }, 1500);
+    }
+});
+
+// ============================================================
+// 🔥 MK NEWS HUB — COMPLETE SCRIPT
 // ============================================================
 
-// ===== RSS FEEDS (Google News - Hindi) =====
+// ===== RSS FEEDS =====
 const RSS2JSON_URL = "https://api.rss2json.com/v1/api.json";
 
 const rssFeeds = {
@@ -113,7 +129,6 @@ function renderNews(items, category) {
         grid.appendChild(card);
     });
 
-    // 🆕 Update news count with animation
     updateNewsCount();
 }
 
@@ -229,20 +244,8 @@ setInterval(updateClock, 1000);
 updateClock();
 
 // ============================================================
-// 🆕 NEW FEATURES — LOADING, BACK TO TOP, STICKY, COUNTER
+// 🆕 BACK TO TOP
 // ============================================================
-
-// ===== LOADING ANIMATION =====
-window.addEventListener('load', function() {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        setTimeout(function() {
-            loader.classList.add('hide');
-        }, 500);
-    }
-});
-
-// ===== BACK TO TOP =====
 const backToTop = document.getElementById('backToTop');
 if (backToTop) {
     window.addEventListener('scroll', function() {
@@ -257,7 +260,9 @@ if (backToTop) {
     });
 }
 
-// ===== STICKY HEADER =====
+// ============================================================
+// 🆕 STICKY HEADER
+// ============================================================
 const header = document.querySelector('header');
 if (header) {
     let lastScroll = 0;
@@ -272,7 +277,9 @@ if (header) {
     });
 }
 
-// ===== LIVE NEWS COUNT ANIMATION =====
+// ============================================================
+// 🆕 LIVE NEWS COUNT ANIMATION
+// ============================================================
 function updateNewsCount() {
     const countEl = document.getElementById('newsCount');
     if (countEl) {
@@ -339,7 +346,7 @@ if (menuToggle) {
         const nav = document.getElementById('mainNav');
         if (nav) {
             nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
-        });
+        }
     });
 }
 
@@ -360,22 +367,3 @@ window.onload = function () {
     fetchNews("होम");
     updateBreaking();
 };
-
-// ============================================================
-// 🎨 ANIMATION STYLES
-// ============================================================
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-    @keyframes marquee {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
-`;
-document.head.appendChild(style);
