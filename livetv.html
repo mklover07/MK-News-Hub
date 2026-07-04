@@ -58,7 +58,7 @@
             flex-wrap: wrap;
         }
         .player-tabs .tab-btn {
-            padding: 8px 20px;
+            padding: 10px 24px;
             border: 2px solid #e5e7eb;
             border-radius: 30px;
             background: var(--card-bg);
@@ -66,7 +66,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
-            font-size: 13px;
+            font-size: 14px;
         }
         .player-tabs .tab-btn:hover {
             border-color: var(--accent);
@@ -85,7 +85,7 @@
             flex-wrap: wrap;
         }
         .channel-tabs .ch-btn {
-            padding: 8px 20px;
+            padding: 10px 20px;
             border: 2px solid #e5e7eb;
             border-radius: 30px;
             background: var(--card-bg);
@@ -151,8 +151,8 @@
 
         @media (max-width: 600px) {
             .live-tv-container h1 { font-size: 24px; }
-            .player-tabs .tab-btn { font-size: 11px; padding: 6px 12px; }
-            .channel-tabs .ch-btn { font-size: 11px; padding: 6px 12px; }
+            .player-tabs .tab-btn { font-size: 12px; padding: 8px 14px; }
+            .channel-tabs .ch-btn { font-size: 12px; padding: 8px 14px; }
         }
     </style>
 </head>
@@ -292,17 +292,16 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
         // ============================================================
-        // 🔥 LIVE TV — 3 PLAYERS + CHANNEL SWITCHER
+        // 🔥 LIVE TV — FIXED (सभी बटन काम करेंगे)
         // ============================================================
 
         const player = document.getElementById('livePlayer');
         const channelNameEl = document.getElementById('channelName');
         const viewerCountEl = document.getElementById('viewerCount');
 
-        // ===== YOUTUBE CHANNELS (100% WORKING) =====
+        // ===== YOUTUBE CHANNELS =====
         const youtubeChannels = {
             'Aaj Tak': 'UCvA9a_pbGMl8MpBxJgC6qWQ',
             'ABP News': 'UCa6vVg4eLrD4nO5kX7Q3jUg',
@@ -325,7 +324,7 @@
         // ===== FUNCTION TO UPDATE PLAYER =====
         function updatePlayer() {
             if (currentPlayer === 'youtube') {
-                // YouTube: पहला चैनल (Aaj Tak) डिफॉल्ट
+                // पहला YouTube चैनल (Aaj Tak)
                 const channelId = youtubeChannels['Aaj Tak'];
                 player.src = `https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1`;
                 channelNameEl.textContent = '▶️ Aaj Tak Live';
@@ -347,29 +346,42 @@
             }
         }
 
-        // ===== PLAYER TABS =====
-        document.querySelectorAll('#playerTabs .tab-btn').forEach(btn => {
+        // ============================================================
+        // PLAYER TABS — सभी बटनों पर क्लिक इवेंट
+        // ============================================================
+        document.querySelectorAll('#playerTabs .tab-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('#playerTabs .tab-btn').forEach(b => b.classList.remove('active'));
+                // सभी से active हटाएं
+                document.querySelectorAll('#playerTabs .tab-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
                 this.classList.add('active');
                 currentPlayer = this.dataset.player;
                 updatePlayer();
             });
         });
 
-        // ===== CHANNEL TABS (IPTV के लिए) =====
-        document.querySelectorAll('#channelTabs .ch-btn').forEach(btn => {
+        // ============================================================
+        // CHANNEL TABS — सभी बटनों पर क्लिक इवेंट
+        // ============================================================
+        document.querySelectorAll('#channelTabs .ch-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('#channelTabs .ch-btn').forEach(b => b.classList.remove('active'));
+                // सभी से active हटाएं
+                document.querySelectorAll('#channelTabs .ch-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
                 this.classList.add('active');
                 currentPlaylist = this.dataset.playlist;
+                // अगर YouTube नहीं चल रहा तो update करें
                 if (currentPlayer !== 'youtube') {
                     updatePlayer();
                 }
             });
         });
 
-        // ===== LIVE CLOCK =====
+        // ============================================================
+        // LIVE CLOCK
+        // ============================================================
         function updateClock() {
             const now = new Date();
             const el = document.getElementById('live-time');
@@ -385,10 +397,12 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // ===== DARK MODE =====
+        // ============================================================
+        // DARK MODE
+        // ============================================================
         const darkBtn = document.getElementById('darkModeToggle');
         if (darkBtn) {
-            darkBtn.addEventListener('click', () => {
+            darkBtn.addEventListener('click', function() {
                 const html = document.documentElement;
                 const current = html.getAttribute('data-theme');
                 if (current === 'dark') {
@@ -401,10 +415,12 @@
             });
         }
 
-        // ===== MOBILE MENU =====
+        // ============================================================
+        // MOBILE MENU
+        // ============================================================
         const menuToggle = document.getElementById('menuToggle');
         if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
+            menuToggle.addEventListener('click', function() {
                 const nav = document.getElementById('mainNav');
                 if (nav) {
                     nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
@@ -412,7 +428,9 @@
             });
         }
 
-        // ===== INITIAL LOAD =====
+        // ============================================================
+        // INITIAL LOAD
+        // ============================================================
         updatePlayer();
     </script>
 </body>
