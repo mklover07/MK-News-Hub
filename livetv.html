@@ -80,7 +80,7 @@
 
         .tv-channels {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 10px;
             margin: 12px 0 20px;
         }
@@ -98,6 +98,7 @@
             align-items: center;
             gap: 8px;
             justify-content: center;
+            text-align: center;
         }
         .tv-channels button:hover {
             border-color: var(--accent);
@@ -137,12 +138,59 @@
             color: var(--text-light);
             font-size: 14px;
         }
+        .channel-info .viewers i {
+            margin-right: 6px;
+        }
+
+        /* IPTV Guide Box */
+        .iptv-guide {
+            margin-top: 30px;
+            padding: 20px 24px;
+            background: var(--secondary);
+            border-radius: 12px;
+            color: white;
+            border-left: 4px solid var(--accent);
+        }
+        .iptv-guide h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .iptv-guide p {
+            opacity: 0.8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .iptv-guide code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            word-break: break-all;
+        }
+        .iptv-guide .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .iptv-guide .steps li {
+            list-style: none;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+        .iptv-guide .steps li i {
+            color: var(--gold);
+            margin-right: 8px;
+            width: 20px;
+        }
 
         @media (max-width: 600px) {
             .live-tv-container h1 { font-size: 24px; }
             .tv-channels { grid-template-columns: repeat(2, 1fr); }
             .tv-channels button { font-size: 11px; padding: 8px 6px; }
             .channel-tabs .tab-btn { font-size: 12px; padding: 6px 16px; }
+            .iptv-guide .steps { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -198,12 +246,12 @@
             <i class="fas fa-tv" style="color:var(--accent);"></i> लाइव टीवी
             <span class="live-badge"><i class="fas fa-circle" style="font-size:10px;"></i> LIVE</span>
         </h1>
-        <p class="sub-text">देखें मुफ्त हिंदी और इंग्लिश न्यूज़ चैनल्स — YouTube से सीधा प्रसारण</p>
+        <p class="sub-text">🎥 फ्री IPTV चैनल्स — हिंदी, इंग्लिश और भारतीय चैनल्स</p>
 
-        <!-- Video Player -->
+        <!-- ===== VIDEO PLAYER ===== -->
         <div class="video-wrapper">
             <iframe id="livePlayer" 
-                    src="https://www.youtube.com/embed/miPjvSMBnBE?autoplay=1&rel=0" 
+                    src="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/countries/in.m3u&autoplay=true" 
                     allow="autoplay; encrypted-media; fullscreen"
                     allowfullscreen>
             </iframe>
@@ -211,39 +259,64 @@
 
         <!-- ===== LANGUAGE TABS ===== -->
         <div class="channel-tabs">
-            <button class="tab-btn active" data-lang="hindi"><i class="fas fa-language"></i> हिंदी</button>
-            <button class="tab-btn" data-lang="english"><i class="fas fa-language"></i> English</button>
-            <button class="tab-btn" data-lang="business"><i class="fas fa-chart-line"></i> बिजनेस</button>
+            <button class="tab-btn active" data-playlist="https://iptv-org.github.io/iptv/countries/in.m3u">
+                🇮🇳 भारत
+            </button>
+            <button class="tab-btn" data-playlist="https://iptv-org.github.io/iptv/languages/hin.m3u">
+                🗣️ हिंदी
+            </button>
+            <button class="tab-btn" data-playlist="https://iptv-org.github.io/iptv/categories/news.m3u">
+                📰 न्यूज़
+            </button>
+            <button class="tab-btn" data-playlist="https://iptv-org.github.io/iptv/index.m3u">
+                🌍 सभी चैनल्स
+            </button>
         </div>
 
-        <!-- ===== HINDI CHANNELS ===== -->
-        <div class="tv-channels" id="hindiChannels">
-            <button class="active" data-video="miPjvSMBnBE"><i class="fas fa-newspaper"></i> Aaj Tak</button>
-            <button data-video="nyd-xznCpJc"><i class="fas fa-newspaper"></i> ABP News</button>
-            <button data-video="U9SH7XWaXOI"><i class="fas fa-newspaper"></i> Zee News</button>
-            <button data-video="Io-G_aiF8HA"><i class="fas fa-newspaper"></i> News18 India</button>
-            <button data-video="7cZF91lhIKk"><i class="fas fa-newspaper"></i> India TV</button>
-        </div>
-
-        <!-- ===== ENGLISH CHANNELS ===== -->
-        <div class="tv-channels" id="englishChannels" style="display:none;">
-            <button data-video="Xd2PwRvajRs"><i class="fas fa-globe"></i> Republic TV</button>
-            <button data-video="LuKwFajn37U"><i class="fas fa-globe"></i> DW News</button>
-        </div>
-
-        <!-- ===== BUSINESS CHANNELS ===== -->
-        <div class="tv-channels" id="businessChannels" style="display:none;">
-            <button data-video="JHh2HgJnBZI"><i class="fas fa-chart-line"></i> Zee Business</button>
-            <button data-video="grnjv6gmKmA"><i class="fas fa-chart-line"></i> ET Now Swadesh</button>
+        <!-- ===== CHANNEL BUTTONS ===== -->
+        <div class="tv-channels" id="channelButtons">
+            <button class="active" data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/countries/in.m3u&autoplay=true">
+                <i class="fas fa-tv"></i> भारत
+            </button>
+            <button data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/languages/hin.m3u&autoplay=true">
+                <i class="fas fa-language"></i> हिंदी
+            </button>
+            <button data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/categories/news.m3u&autoplay=true">
+                <i class="fas fa-newspaper"></i> न्यूज़
+            </button>
+            <button data-channel="https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/index.m3u&autoplay=true">
+                <i class="fas fa-globe"></i> सभी
+            </button>
         </div>
 
         <!-- Channel Info -->
         <div class="channel-info">
             <div class="channel-name">
-                <i class="fas fa-circle"></i> <span id="channelName">Aaj Tak Live</span>
+                <i class="fas fa-circle"></i> <span id="channelName">🇮🇳 भारत के चैनल्स</span>
             </div>
             <div class="viewers">
-                <i class="fas fa-users"></i> <span id="viewerCount">15.2K</span> देख रहे हैं
+                <i class="fas fa-users"></i> <span id="viewerCount">10,000+</span> चैनल्स
+            </div>
+        </div>
+
+        <!-- ===== IPTV GUIDE ===== -->
+        <div class="iptv-guide">
+            <h3><i class="fas fa-info-circle" style="color:var(--gold);"></i> IPTV क्या है?</h3>
+            <p>
+                IPTV (Internet Protocol Television) — आप बिना केबल के <strong>मुफ्त चैनल्स</strong> देख सकते हैं। 
+                ये सारे चैनल्स <strong>सार्वजनिक रूप से फ्री</strong> हैं और IPTV-Org द्वारा मेंटेन किए जाते हैं।
+            </p>
+            <div class="steps">
+                <div>
+                    <li><i class="fas fa-check-circle"></i> <strong>भारत</strong> — 500+ भारतीय चैनल्स</li>
+                    <li><i class="fas fa-check-circle"></i> <strong>हिंदी</strong> — 200+ हिंदी भाषा चैनल्स</li>
+                    <li><i class="fas fa-check-circle"></i> <strong>न्यूज़</strong> — 100+ न्यूज़ चैनल्स</li>
+                </div>
+                <div>
+                    <li><i class="fas fa-check-circle"></i> <strong>सभी</strong> — 10,000+ अंतरराष्ट्रीय चैनल्स</li>
+                    <li><i class="fas fa-info-circle"></i> कोई भी <strong>फ्री</strong> — बिना पैसे के</li>
+                    <li><i class="fas fa-info-circle"></i> कोई <strong>API Key</strong> नहीं चाहिए</li>
+                </div>
             </div>
         </div>
     </div>
@@ -264,6 +337,7 @@
                     <a href="index.html">होम</a>
                     <a href="about.html">हमारे बारे में</a>
                     <a href="livetv.html">लाइव टीवी</a>
+                    <a href="music.html">म्यूज़िक</a>
                     <a href="contact.html">संपर्क</a>
                 </div>
                 <div class="footer-col">
@@ -280,111 +354,73 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 <strong>MK Global Nexus</strong> | MK News Hub — All rights reserved.</p>
                 <p style="font-size:12px;opacity:0.5;margin-top:4px;">
-                    <strong>Disclaimer:</strong> All live streams are embedded from YouTube. We do not host any content.
+                    <strong>Disclaimer:</strong> IPTV streams are sourced from public IPTV-Org. We do not host any content.
                 </p>
             </div>
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script>
-        // ===== LIVE TV CHANNEL DATA =====
-        const channelData = {
-            // हिंदी न्यूज़
-            'miPjvSMBnBE': { name: 'Aaj Tak Live', viewers: '15.2K' },
-            'nyd-xznCpJc': { name: 'ABP News Live', viewers: '1.2K' },
-            'U9SH7XWaXOI': { name: 'Zee News Live', viewers: '161' },
-            'Io-G_aiF8HA': { name: 'News18 India Live', viewers: '17.6K' },
-            '7cZF91lhIKk': { name: 'India TV Live', viewers: '199' },
-            // इंग्लिश न्यूज़
-            'Xd2PwRvajRs': { name: 'Republic TV Live', viewers: '895' },
-            'LuKwFajn37U': { name: 'DW News Live', viewers: '2.1K' },
-            // बिजनेस
-            'JHh2HgJnBZI': { name: 'Zee Business Live', viewers: '238' },
-            'grnjv6gmKmA': { name: 'ET Now Swadesh', viewers: '11' }
-        };
-
-        // ===== DOM ELEMENTS =====
+        // ===== IPTV PLAYER — PERMANENT SOLUTION =====
         const player = document.getElementById('livePlayer');
         const channelNameEl = document.getElementById('channelName');
         const viewerCountEl = document.getElementById('viewerCount');
+        const channelButtons = document.querySelectorAll('.tv-channels button');
+        const tabButtons = document.querySelectorAll('.tab-btn');
 
-        // ===== सभी चैनल कंटेनर =====
-        const containers = {
-            hindi: document.getElementById('hindiChannels'),
-            english: document.getElementById('englishChannels'),
-            business: document.getElementById('businessChannels')
+        const channelData = {
+            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/countries/in.m3u&autoplay=true': 
+                { name: '🇮🇳 भारत के चैनल्स', viewers: '500+' },
+            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/languages/hin.m3u&autoplay=true': 
+                { name: '🗣️ हिंदी चैनल्स', viewers: '200+' },
+            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/categories/news.m3u&autoplay=true': 
+                { name: '📰 न्यूज़ चैनल्स', viewers: '100+' },
+            'https://francomartino.github.io/hls-embed/?url=https://iptv-org.github.io/iptv/index.m3u&autoplay=true': 
+                { name: '🌍 सभी चैनल्स', viewers: '10,000+' }
         };
 
-        // ===== टैब बटन्स =====
-        const tabBtns = document.querySelectorAll('.tab-btn');
-
-        // ===== चैनल बदलने का फंक्शन =====
-        function switchChannel(videoId) {
-            const data = channelData[videoId];
-            if (!data) return;
-
-            // Player अपडेट करें
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            
-            // Info अपडेट करें
-            channelNameEl.textContent = data.name;
-            viewerCountEl.textContent = data.viewers;
-
-            // सभी कंटेनरों से active class हटाएं
-            document.querySelectorAll('.tv-channels button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // इस video वाले बटन को active करें
-            document.querySelectorAll(`.tv-channels button[data-video="${videoId}"]`).forEach(btn => {
-                btn.classList.add('active');
-            });
-        }
-
-        // ===== सभी बटन्स पर क्लिक इवेंट लगाएं =====
-        document.querySelectorAll('.tv-channels button').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const videoId = this.dataset.video;
-                switchChannel(videoId);
-            });
-        });
-
-        // ===== टैब स्विचर =====
-        tabBtns.forEach(btn => {
+        // ===== CHANNEL BUTTONS =====
+        channelButtons.forEach(btn => {
             btn.addEventListener('click', function() {
-                // सभी टैब्स से active हटाएं
-                tabBtns.forEach(b => b.classList.remove('active'));
+                channelButtons.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
 
-                const lang = this.dataset.lang;
+                const channelUrl = this.dataset.channel;
+                const data = channelData[channelUrl];
 
-                // सभी कंटेनर छिपाएं
-                containers.hindi.style.display = 'none';
-                containers.english.style.display = 'none';
-                containers.business.style.display = 'none';
-
-                // चुने हुए कंटेनर को दिखाएं
-                if (lang === 'hindi') {
-                    containers.hindi.style.display = 'grid';
-                    const firstBtn = containers.hindi.querySelector('button');
-                    if (firstBtn) switchChannel(firstBtn.dataset.video);
-                } else if (lang === 'english') {
-                    containers.english.style.display = 'grid';
-                    const firstBtn = containers.english.querySelector('button');
-                    if (firstBtn) switchChannel(firstBtn.dataset.video);
-                } else if (lang === 'business') {
-                    containers.business.style.display = 'grid';
-                    const firstBtn = containers.business.querySelector('button');
-                    if (firstBtn) switchChannel(firstBtn.dataset.video);
+                if (data) {
+                    player.src = channelUrl;
+                    channelNameEl.textContent = data.name;
+                    viewerCountEl.textContent = data.viewers;
                 }
             });
         });
 
-        // ===== DEFAULT: हिंदी का पहला चैनल =====
-        const defaultBtn = containers.hindi.querySelector('button');
-        if (defaultBtn) {
-            switchChannel(defaultBtn.dataset.video);
-        }
+        // ===== TAB BUTTONS (प्लेलिस्ट बदलें) =====
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const playlistUrl = this.dataset.playlist;
+                const embedUrl = `https://francomartino.github.io/hls-embed/?url=${playlistUrl}&autoplay=true`;
+                
+                // चैनल बटन्स में से मैचिंग बटन ढूंढें और उसे active करें
+                channelButtons.forEach(b => {
+                    b.classList.remove('active');
+                    if (b.dataset.channel === embedUrl) {
+                        b.classList.add('active');
+                        const data = channelData[embedUrl];
+                        if (data) {
+                            player.src = embedUrl;
+                            channelNameEl.textContent = data.name;
+                            viewerCountEl.textContent = data.viewers;
+                        }
+                    }
+                });
+            });
+        });
 
         // ===== LIVE CLOCK =====
         function updateClock() {
