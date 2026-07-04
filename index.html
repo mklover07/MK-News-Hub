@@ -30,6 +30,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+
+    <!-- ===== LOADING ANIMATION ===== -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader-logo">📰 MK <span>News</span> Hub</div>
+        <div class="loader-spinner"></div>
+        <p>लोड हो रहा है...</p>
+    </div>
+
     <!-- 🔝 टॉप बार -->
     <div class="top-bar">
         <div class="container">
@@ -39,7 +47,7 @@
     </div>
 
     <!-- 📰 हेडर -->
-    <header>
+    <header id="mainHeader">
         <div class="container">
             <div class="logo" style="display:flex;align-items:center;gap:12px;">
                 <img src="images/logo.png" alt="MK Global Nexus Logo" style="height:50px;width:auto;" onerror="this.style.display='none'" />
@@ -140,6 +148,20 @@
         </div>
     </section>
 
+    <!-- ===== BACK TO TOP BUTTON ===== -->
+    <button class="back-to-top" id="backToTop" title="ऊपर जाएं">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ===== FLOATING SOCIAL ICONS ===== -->
+    <div class="floating-social">
+        <a href="#" class="fs-fb" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="fs-tw" target="_blank" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" class="fs-ig" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="fs-yt" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="fs-wa" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
     <!-- 🔗 फूटर -->
     <footer>
         <div class="container">
@@ -162,6 +184,7 @@
                     <a href="index.html">होम</a>
                     <a href="about.html">हमारे बारे में</a>
                     <a href="livetv.html">लाइव टीवी</a>
+                    <a href="music.html">म्यूज़िक</a>
                     <a href="contact.html">संपर्क</a>
                     <a href="privacy.html">प्राइवेसी पॉलिसी</a>
                     <a href="disclaimer.html">डिस्क्लेमर</a>
@@ -179,8 +202,8 @@
                 </div>
                 <div class="footer-col">
                     <h4>संपर्क</h4>
-                    <p><i class="fas fa-envelope"></i> mkxnewsdesk@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +91 8003029006</p>
+                    <p><i class="fas fa-envelope"></i> info@mknewshub.com</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
                     <p><i class="fas fa-map-marker-alt"></i> नई दिल्ली, भारत</p>
                 </div>
             </div>
