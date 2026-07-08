@@ -1,5 +1,5 @@
 // ============================================================
-// 🔥 MK NEWS HUB — HINDI + ENGLISH NEWS
+// 🔥 MK NEWS HUB — COMPLETE SCRIPT
 // ============================================================
 
 // ===== LOADING ANIMATION =====
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
 const RSS2JSON_URL = "https://api.rss2json.com/v1/api.json";
 
 const rssFeeds = {
-    // 🇮🇳 HINDI NEWS
     "होम": "https://news.google.com/rss?hl=hi-IN&gl=IN&ceid=IN:hi",
     "राजनीति": "https://news.google.com/rss/search?q=politics+india&hl=hi-IN&gl=IN&ceid=IN:hi",
     "टेक्नोलॉजी": "https://news.google.com/rss/search?q=technology&hl=hi-IN&gl=IN&ceid=IN:hi",
@@ -28,8 +27,6 @@ const rssFeeds = {
     "मनोरंजन": "https://news.google.com/rss/search?q=entertainment&hl=hi-IN&gl=IN&ceid=IN:hi",
     "दुनिया": "https://news.google.com/rss?hl=hi-IN&gl=IN&ceid=IN:hi&topic=W",
     "बिजनेस": "https://news.google.com/rss?hl=hi-IN&gl=IN&ceid=IN:hi&topic=B",
-    
-    // 🇬🇧 ENGLISH NEWS
     "home": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
     "politics": "https://news.google.com/rss/search?q=politics&hl=en-US&gl=US&ceid=US:en",
     "technology": "https://news.google.com/rss/search?q=technology&hl=en-US&gl=US&ceid=US:en",
@@ -367,6 +364,78 @@ if (searchInput) {
         if (e.key === 'Enter') searchNews();
     });
 }
+
+// ============================================================
+// 🤖 AI CHATBOT (Free - No API Key Required)
+// ============================================================
+
+function getAIResponse(message) {
+    const msg = message.toLowerCase();
+    
+    if (msg.includes('hi') || msg.includes('hello') || msg.includes('namaste')) {
+        return '🙏 Namaste! How can I help you with today\'s news?';
+    }
+    if (msg.includes('politics') || msg.includes('राजनीति')) {
+        return '📰 India is buzzing with political news today! Who would you like to know about?';
+    }
+    if (msg.includes('tech') || msg.includes('technology') || msg.includes('टेक')) {
+        return '💻 Technology news is heating up! AI, 5G, and startups are making headlines.';
+    }
+    if (msg.includes('sports') || msg.includes('खेल') || msg.includes('cricket')) {
+        return '🏏 Cricket fever is on! India\'s performance is the talk of the town.';
+    }
+    if (msg.includes('weather') || msg.includes('मौसम') || msg.includes('rain')) {
+        return '🌧️ Monsoon is active across India. Check the weather updates for your city!';
+    }
+    if (msg.includes('business') || msg.includes('बिजनेस') || msg.includes('market')) {
+        return '📈 Markets are showing mixed trends today. Sensex and Nifty are in focus.';
+    }
+    if (msg.includes('who') || msg.includes('what') || msg.includes('when') || msg.includes('where')) {
+        return '🔍 That\'s a great question! I can help you find news about any topic. Try searching for a specific keyword.';
+    }
+    if (msg.includes('thanks') || msg.includes('thank you') || msg.includes('धन्यवाद')) {
+        return '😊 You\'re welcome! Stay tuned for more updates.';
+    }
+    if (msg.includes('help') || msg.includes('मदद')) {
+        return '💡 You can ask me about: Politics, Technology, Sports, Business, Weather, or any news topic!';
+    }
+    
+    return '📰 Interesting question! I\'m here to help with news. Ask me about: Politics, Technology, Sports, Business, Weather, or any topic!';
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    if (!message) return;
+    
+    const chatBox = document.getElementById('chatMessages');
+    
+    chatBox.innerHTML += `
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+            <div style="background:var(--accent);color:white;padding:12px 16px;border-radius:12px 12px 4px 12px;max-width:85%;">
+                ${message}
+            </div>
+        </div>
+    `;
+    input.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    setTimeout(() => {
+        const response = getAIResponse(message);
+        chatBox.innerHTML += `
+            <div style="display:flex;gap:10px;margin-bottom:10px;">
+                <div style="background:var(--card-bg);padding:12px 16px;border-radius:12px 12px 12px 4px;max-width:85%;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    ${response}
+                </div>
+            </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 500);
+}
+
+document.getElementById('chatInput')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendChatMessage();
+});
 
 // ===== PAGE LOAD =====
 window.onload = function () {
